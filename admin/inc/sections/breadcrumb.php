@@ -6,14 +6,14 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                        <li class="breadcrumb-item text-capitalize active" aria-current="page"><?php if (isset($page))echo $page ?></li>
                     </ol>
                 </nav>
             </div>
         </div>
         <div class="col-7">
             <div class="text-right upgrade-btn">
-                <a href="https://wrappixel.com/templates/xtremeadmin/" class="btn btn-danger text-white" target="_blank">Upgrade to Pro</a>
+                <a href="/" class="btn btn-danger text-white" target="_blank">Back Home</a>
             </div>
         </div>
     </div>

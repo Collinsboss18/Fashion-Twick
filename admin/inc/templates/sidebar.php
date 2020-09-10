@@ -32,17 +32,17 @@
                 </li>
                 <!-- User Profile-->
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.php" aria-expanded="false">
                         <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-basic.html" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="./category.php" aria-expanded="false">
                         <i class="mdi mdi-table-edit"></i><span class="hide-menu">Create Category</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.html" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="sub-category.php" aria-expanded="false">
                         <i class="mdi mdi-view-module"></i><span class="hide-menu">Sub Category</span>
                     </a>
                 </li>

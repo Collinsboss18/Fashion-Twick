@@ -1,3 +1,4 @@
+<?php $page = 'dashboard' ?>
 <!-- Header Section -->
 <?php require_once ('./inc/sections/header.php') ?>
 <!-- Header Section End -->
