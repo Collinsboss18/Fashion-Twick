@@ -17,7 +17,7 @@
     <!-- Content Section  -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-md-flex align-items-center">
@@ -28,20 +28,19 @@
                         <div class="row">
                             <!-- column -->
                             <div class="col-lg-12">
-                                <table class="datatable-1 table">
+                                <table class="datatable-1 table text-capitalize">
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Category Name</th>
                                         <th scope="col">Sub-Category</th>
+                                        <th scope="col">Created</th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                    $query = /** @lang text */
-                                        "SELECT * FROM category";
+                                    <?php $query = /** @lang text */"SELECT subcategory.id,category.catName,subcategory.subcategory,subcategory.created_at FROM subcategory JOIN category ON category.id=subcategory.categoryid";
                                     $result= select_query($query);
                                     $cnt = 1;
                                     while ($row = mysqli_fetch_assoc($result)){
@@ -49,9 +48,10 @@
                                         <tr>
                                             <th scope="row"><?= htmlentities($cnt) ?></th>
                                             <td><?= htmlentities($row['catName']) ?></td>
-                                            <td><?= htmlentities($row['catDescription']) ?></td>
-                                            <td><a href="?editcat=<?= $row['id'] ?>" class="text-cyan"><i class="mdi mdi-table-edit"></i></a></td>
-                                            <td><a href="?delcat=<?= $row['id'] ?>" class="text-danger"><i class="fa fa-trash"></i></a></td>
+                                            <td><?= htmlentities($row['subcategory']) ?></td>
+                                            <td><?= htmlentities(date("d-m-y", strtotime($row['created_at']))) ?></td>
+                                            <td><a href="?updateSub=<?= $row['id'] ?>" class="text-cyan"><i class="mdi mdi-table-edit"></i></a></td>
+                                            <td><a href="?delSub=<?= $row['id'] ?>" class="text-danger"><i class="fa fa-trash"></i></a></td>
                                         </tr>
                                         <?php $cnt = $cnt+1; } ?>
                                     </tbody>
@@ -62,11 +62,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
-                <?php if (isset($_GET['editcat'])) {?>
-                    <?php require ('inc/templates/editcat.php');?>
+            <div class="col-md-4">
+                <?php if (isset($_GET['updateSub'])) {?>
+                    <?php require ('inc/templates/updatesubcat.php');?>
                 <?php } else { ?>
-                    <?php require ('inc/templates/createcat.php');?>
+                    <?php require ('inc/templates/createsubcat.php');?>
                 <?php } ?>
             </div>
         </div>

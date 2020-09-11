@@ -28,7 +28,7 @@
                         <div class="row">
                             <!-- column -->
                             <div class="col-lg-12">
-                                <table class="datatable-1 table">
+                                <table class="datatable-1 table text-capitalize">
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -50,8 +50,8 @@
                                             <th scope="row"><?= htmlentities($cnt) ?></th>
                                             <td><?= htmlentities($row['catName']) ?></td>
                                             <td><?= htmlentities($row['catDescription']) ?></td>
-                                            <td><a href="?editcat=<?= $row['id'] ?>" class="text-cyan"><i class="mdi mdi-table-edit"></i></a></td>
-                                            <td><a href="?delcat=<?= $row['id'] ?>" class="text-danger"><i class="fa fa-trash"></i></a></td>
+                                            <td><a href="?updateCat=<?= $row['id'] ?>" class="text-cyan"><i class="mdi mdi-table-edit"></i></a></td>
+                                            <td><a href="?delCat=<?= $row['id'] ?>" class="text-danger"><i class="fa fa-trash"></i></a></td>
                                         </tr>
                                     <?php $cnt = $cnt+1; } ?>
                                     </tbody>
@@ -63,8 +63,8 @@
                 </div>
             </div>
             <div class="col-md-5">
-            <?php if (isset($_GET['editcat'])) {?>
-                <?php require ('inc/templates/editcat.php');?>
+            <?php if (isset($_GET['updateCat'])) {?>
+                <?php require ('inc/templates/updatecat.php');?>
             <?php } else { ?>
                 <?php require ('inc/templates/createcat.php');?>
             <?php } ?>

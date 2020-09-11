@@ -5,11 +5,9 @@
         </div>
         <form class="form-horizontal form-material" action="" method="post" role="form">
             <?php
-            $id = $_GET['editcat'];
-            $query = /** @lang text */
-                "SELECT * FROM category WHERE id = '$id' LIMIT 1";
+            $id = $_GET['updateCat'];
+            $query = /** @lang text */"SELECT * FROM category WHERE id = '$id' LIMIT 1";
             $result= select_query($query);
-            $cnt = 1;
             while ($row = mysqli_fetch_assoc($result)){
             ?>
             <div class="form-group">
@@ -27,7 +25,7 @@
             <?php } ?>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <button type="submit" name="updatecat" class="btn btn-cyan text-white" id="createCat">
+                    <button type="submit" name="updateCat" class="btn btn-cyan text-white" id="createCat">
                         <i class="mdi mdi-table-edit createCatLoader"></i>
                         Update Category
                     </button>
