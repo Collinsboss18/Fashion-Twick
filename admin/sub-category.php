@@ -50,8 +50,8 @@
                                             <td><?= htmlentities($row['catName']) ?></td>
                                             <td><?= htmlentities($row['subcategory']) ?></td>
                                             <td><?= htmlentities(date("d-m-y", strtotime($row['created_at']))) ?></td>
-                                            <td><a href="?updateSub=<?= $row['id'] ?>" class="text-cyan"><i class="mdi mdi-table-edit"></i></a></td>
-                                            <td><a href="?delSub=<?= $row['id'] ?>" class="text-danger"><i class="fa fa-trash"></i></a></td>
+                                            <td><a href="?updateSub=<?= $row['id'] ?>" class="text-cyan"><i title="Edit" class="mdi mdi-table-edit"></i></a></td>
+                                            <td><a href="?delSub=<?= $row['id'] ?>" class="text-danger"><i title="Delete" class="fa fa-trash"></i></a></td>
                                         </tr>
                                         <?php $cnt = $cnt+1; } ?>
                                     </tbody>
@@ -64,9 +64,9 @@
             </div>
             <div class="col-md-4">
                 <?php if (isset($_GET['updateSub'])) {?>
-                    <?php require ('inc/templates/updatesubcat.php');?>
+                    <?php require ('inc/templates/subcategory/updatesubcat.php');?>
                 <?php } else { ?>
-                    <?php require ('inc/templates/createsubcat.php');?>
+                    <?php require ('inc/templates/subcategory/createsubcat.php');?>
                 <?php } ?>
             </div>
         </div>

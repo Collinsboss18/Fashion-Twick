@@ -22,5 +22,6 @@ function insert_query($query)
 {
     if ($conn = db_connect()) {
         mysqli_query($conn, $query);
+        return "SUCCESS";
     }
 }

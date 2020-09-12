@@ -304,6 +304,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <!-- End Content Section  -->
 <!-- footer -->
 <?php require_once ('./inc/sections/footer.php') ?>

@@ -15,6 +15,7 @@
                                 <span class="op-5 user-email">varun@gmail.com</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Userdd">
+                                <a class="dropdown-item" href="index.php"><i class="ti-user m-r-5 m-l-5"></i> Dashboard</a>
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
@@ -26,14 +27,8 @@
                     <!-- End User Profile-->
                 </li>
                 <li class="p-15 m-t-10">
-                    <a href="javascript:void(0)" class="btn btn-block create-btn text-white no-block d-flex align-items-center">
+                    <a href="product.php?action=create" class="btn btn-block create-btn text-white no-block d-flex align-items-center">
                         <i class="fa fa-plus-square"></i> <span class="hide-menu m-l-5">New Product</span>
-                    </a>
-                </li>
-                <!-- User Profile-->
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.php" aria-expanded="false">
-                        <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -47,7 +42,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="icon-material.html" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="product.php" aria-expanded="false">
                         <i class="mdi mdi-view-sequential"></i><span class="hide-menu">Manage Products</span>
                     </a>
                 </li>
@@ -59,6 +54,11 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.html" aria-expanded="false">
                         <i class="mdi mdi-account-network"></i><span class="hide-menu">Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.html" aria-expanded="false">
+                        <i class="fa fa-trash"></i><span class="hide-menu">Trash</span>
                     </a>
                 </li>
                 <li class="text-center p-40 upgrade-btn">
