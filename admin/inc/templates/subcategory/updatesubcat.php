@@ -5,7 +5,7 @@
         </div>
         <form class="form-horizontal form-material" action="" method="post" role="form">
             <?php
-            $id = $_GET['updatesub'];
+            $id = $_GET['updateSub'];
             $query = /** @lang text */"SELECT subcategory.id, subcategory.categoryid, category.catName,subcategory.subcategory FROM subcategory JOIN category ON category.id=subcategory.categoryid WHERE subcategory.id ='$id'";
             $result= select_query($query);
             while ($row = mysqli_fetch_assoc($result)){
@@ -15,10 +15,8 @@
                 <div class="col-md-12">
                     <select name="categoryId" class="form-control form-control-line" required>
                         <option value="<?= $row['categoryId'] ?>"><?= $row['catName'] ?></option>
-                        <?php $query = /** @lang text */"SELECT * FROM `category`";
-                        $result = select_query($query);
-                        while ($cat = mysqli_fetch_assoc($result)) {
-                            ?>
+                        <?php $category = mysqli_query($con, /** @lang text */"SELECT * FROM `category`");
+                        while ($cat = mysqli_fetch_assoc($category)) { ?>
                             <option value="<?= $cat['id'] ?>"><?= $cat['catName'] ?></option>
                         <?php } ?>
                     </select>

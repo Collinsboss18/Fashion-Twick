@@ -5,7 +5,8 @@
         </div>
         <div class="ml-auto">
             <div class="dl">
-                <a href="?action=create"><i style="font-size: 2em;" class="mdi mdi-plus-box text-cyan"></i></a>
+                <a title="Print Data" href="#" onclick="window.print()" style="font-size: 2em;" class="mdi mdi-printer text-secondary"></i></a>
+                <a title="Create Product" href="?action=create"><i style="font-size: 2em;" class="mdi mdi-plus-box text-cyan"></i></a>
             </div>
         </div>
     </div>
@@ -24,9 +25,7 @@
             </tr>
             </thead>
             <tbody>
-            <?php $query = /** @lang text */
-                "SELECT products.*,category.catName,subcategory.subcategory FROM products JOIN category ON category.id=products.category JOIN subcategory ON subcategory.id=products.subCategory";
-            $result= select_query($query);
+            <?php $result = mysqli_query($con,/** @lang text */"SELECT products.*,category.catName,subcategory.subcategory FROM products JOIN category ON category.id=products.category JOIN subcategory ON subcategory.id=products.subCategory");
             $cnt = 1;
             while ($row = mysqli_fetch_assoc($result)){
                 ?>
@@ -38,7 +37,7 @@
                     <td><span>&#8358</span><?= htmlentities($row['price']) ?></td>
                     <td><?= htmlentities(date("j-M-y", strtotime($row['updated_at']))) ?></td>
                     <td><a href="?action=update&i=<?= $row['id'] ?>" class="text-cyan"><i class="mdi mdi-table-edit" title="Edit"></i></a></td>
-                    <td><a href="?delPro=<?= $row['id'] ?>" class="text-danger"><i class="fa fa-trash" title="Delete"></i></a></td>
+                    <td><a href="?delPro=<?= $row['id'] ?>" class="text-danger"><i class="fa fa-trash" title="Delete" onClick="return confirm('Are you sure you want to delete?')"></i></a></td>
                 </tr>
                 <?php $cnt=$cnt+1; } ?>
             </tbody>

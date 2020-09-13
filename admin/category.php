@@ -51,7 +51,7 @@
                                             <td><?= htmlentities($row['catName']) ?></td>
                                             <td><?= htmlentities($row['catDescription']) ?></td>
                                             <td><a href="?updateCat=<?= $row['id'] ?>" class="text-cyan"><i title="Edit" class="mdi mdi-table-edit"></i></a></td>
-                                            <td><a href="?delCat=<?= $row['id'] ?>" class="text-danger"><i title="Delete" class="fa fa-trash"></i></a></td>
+                                            <td><a href="?delCat=<?= $row['id'] ?>" class="text-danger"><i title="Delete" class="fa fa-trash" onClick="return confirm('Are you sure you want to delete?')"></i></a></td>
                                         </tr>
                                     <?php $cnt = $cnt+1; } ?>
                                     </tbody>

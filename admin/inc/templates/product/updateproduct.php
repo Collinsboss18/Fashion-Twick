@@ -13,8 +13,7 @@
         <form class="form-horizontal form-material" name="insertProduct" action="" method="post">
             <?php
             $id = $_GET['i'];
-            $query = /** @lang text */"SELECT products.*,category.catName,category.id as cid,subcategory.subcategory,subcategory.id as subId from products join category on category.id=products.category join subcategory on subcategory.id=products.subCategory where products.id='$id'";
-            $result= select_query($query);
+            $result =  mysqli_query($con, /** @lang text */"SELECT products.*,category.catName,category.id as cid,subcategory.subcategory,subcategory.id as subId from products join category on category.id=products.category join subcategory on subcategory.id=products.subCategory where products.id='$id'");
             while ($row = mysqli_fetch_assoc($result)){
             ?>
             <div class="form-group">
@@ -24,8 +23,7 @@
                         <option value="<?= htmlentities($row['cid']);?>"><?= htmlentities($row['catName']);?></option>
                         <?php
                         $id = $_GET['updateCat'];
-                        $query = /** @lang text */"SELECT * FROM category";
-                        $getCat= select_query($query);
+                        $getCat= mysqli_query($con,/** @lang text */"SELECT * FROM category");
                         while ($rw = mysqli_fetch_assoc($getCat)){
                         if($row['catName']==$rw['catName']) {
                             continue;

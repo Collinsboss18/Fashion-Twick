@@ -1,4 +1,7 @@
 <?php require ('inc/database/config.php'); ?>
+<?php if (!isset($_SESSION['infoA']['id'])){
+    header("Location: /");
+} ?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 

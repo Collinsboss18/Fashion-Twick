@@ -51,7 +51,7 @@
                                             <td><?= htmlentities($row['subcategory']) ?></td>
                                             <td><?= htmlentities(date("d-m-y", strtotime($row['created_at']))) ?></td>
                                             <td><a href="?updateSub=<?= $row['id'] ?>" class="text-cyan"><i title="Edit" class="mdi mdi-table-edit"></i></a></td>
-                                            <td><a href="?delSub=<?= $row['id'] ?>" class="text-danger"><i title="Delete" class="fa fa-trash"></i></a></td>
+                                            <td><a href="?delSub=<?= $row['id'] ?>" class="text-danger"><i title="Delete" class="fa fa-trash" onClick="return confirm('Are you sure you want to delete?')"></i></a></td>
                                         </tr>
                                         <?php $cnt = $cnt+1; } ?>
                                     </tbody>

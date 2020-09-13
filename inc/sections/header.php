@@ -7,7 +7,7 @@
     <meta name="keywords" content="Ashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon.png">
     <title>Fashion Twick</title>
 
     <!-- Google Font -->

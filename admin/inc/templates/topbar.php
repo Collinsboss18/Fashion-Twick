@@ -7,16 +7,11 @@
             <a class="navbar-brand" href="index.php">
                 <!-- Logo icon -->
                 <b class="logo-icon">
-                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                    <!-- Dark Logo icon -->
-                    <!-- <img src="assets/img/logo.png" alt="homepage" class="dark-logo" />-->
-                    <i class="mdi mdi-shopping"></i>
+                    <i class="mdi mdi-shopping fa-lg"></i>
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->
                 <span class="logo-text">
-                    <!-- dark Logo text -->
-                    <!-- <img src="assets/img/logo-text.png" alt="homepage" class="dark-logo" />-->
                     <b>Fashion Twick</b>
                 </span>
             </a>
@@ -51,11 +46,13 @@
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/img/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/img/users/<?= $_SESSION['infoA']['image'] ?>" alt="user" class="rounded-circle" width="31"></a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated">
                         <a class="dropdown-item" href="index.php"><i class="ti-user m-r-5 m-l-5"></i> Dashboard</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                        <a class="dropdown-item" href="profile.php"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                         <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="logout.php"><i class="ti-email m-r-5 m-l-5"></i> Logout</a>
                     </div>
                 </li>
                 <!-- ============================================================== -->
