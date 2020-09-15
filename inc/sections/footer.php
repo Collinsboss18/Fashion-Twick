@@ -20,10 +20,13 @@
                 <div class="footer__widget">
                     <h6>Shop With Us</h6>
                     <ul>
-                        <li><a href="#">Women</a></li>
-                        <li><a href="#">Men</a></li>
-                        <li><a href="#">Kids</a></li>
-                        <li><a href="#">Accessories</a></li>
+                        <li><a href="/">Home</a></li>
+                        <?php
+                        $result= mysqli_query($con, /** @lang text */ "SELECT * FROM category WHERE `isActive`=1");
+                        while ($row = mysqli_fetch_assoc($result)){ ?>
+                            <li><a href="./shop.php?category=<?= $row['id'] ?>"><?= $row['catName'] ?></a></li>
+                        <?php } ?>
+                        <li><a href="./contact.php">Contact</a></li>
                     </ul>
                 </div>
             </div>

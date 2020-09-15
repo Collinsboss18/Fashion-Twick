@@ -25,9 +25,10 @@
             </tr>
             </thead>
             <tbody>
-            <?php $result = mysqli_query($con,/** @lang text */"SELECT products.*,category.catName,subcategory.subcategory FROM products JOIN category ON category.id=products.category JOIN subcategory ON subcategory.id=products.subCategory");
+            <?php $result = mysqli_query($con,/** @lang text */"SELECT products.*,category.catName,subcategory.subcategory FROM products JOIN category ON category.id=products.category JOIN subcategory ON subcategory.id=products.subCategory ORDER BY products.id DESC");
             $cnt = 1;
             while ($row = mysqli_fetch_assoc($result)){
+                if ($row['isActive'] == 1){
                 ?>
                 <tr>
                     <th scope="row"><?= htmlentities($cnt) ?></th>
@@ -39,7 +40,7 @@
                     <td><a href="?action=update&i=<?= $row['id'] ?>" class="text-cyan"><i class="mdi mdi-table-edit" title="Edit"></i></a></td>
                     <td><a href="?delPro=<?= $row['id'] ?>" class="text-danger"><i class="fa fa-trash" title="Delete" onClick="return confirm('Are you sure you want to delete?')"></i></a></td>
                 </tr>
-                <?php $cnt=$cnt+1; } ?>
+                <?php $cnt=$cnt+1; } } ?>
             </tbody>
         </table>
     </div>

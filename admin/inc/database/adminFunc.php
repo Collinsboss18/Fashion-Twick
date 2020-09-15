@@ -3,29 +3,50 @@
 if (isset($_POST['createCat'])) {
     $name = $_POST['catName'];
     $description = $_POST['catDescription'];
-    $createCat =  mysqli_query($con,/** @lang text */"INSERT INTO `category` (`catName`, `catDescription`) VALUES ('$name', '$description')");
-    if(!$createCat){
-        die('QUERY FAILED' . mysqli_error(db_connect()));
-    }
-}
-if (isset($_GET['delCat'])) {
-    $delcat = $_GET['delCat'];
-    $deleteCat = mysqli_query($con,/** @lang text */"DELETE FROM `category` WHERE id = '$delcat'");
-    if(!$deleteCat){
-        die('QUERY FAILED' . mysqli_error(db_connect()));
+    $createCat =  mysqli_query($con,/** @lang text */"INSERT INTO `category` (`catName`, `catDescription`, `isActive`) VALUES ('$name', '$description', 1)");
+    if($createCat){
+        $_SESSION['c_msg'] = "Successful Category created";
     }
 }
 if (isset($_POST['updateCat'])) {
     $id = $_GET['updateCat'];
     $name = $_POST['catName'];
     $description = $_POST['catDescription'];
-    $updateCat = mysqli_query($con,/** @lang text */"UPDATE `category` SET `catName`='$name',catDescription='$description',updated_at=now() where id='$id'");
-    if(!$updateCat){
-        die('QUERY FAILED' . mysqli_error(db_connect()));
-    }else{
+    $updateCat = mysqli_query($con,/** @lang text */"UPDATE `category` SET `catName`='$name',catDescription='$description',updated_at=now() WHERE id='$id'");
+    if($updateCat){
+//        $_SESSION['u_msg'] = "Successful Category updated";
         header('Location: category.php');
     }
 }
+if (isset($_GET['delCat'])) {
+    $delCat = $_GET['delCat'];
+    $deleteCat = mysqli_query($con,/** @lang text */"UPDATE `category` SET `isActive`='0' WHERE id='$delCat'");
+    if($deleteCat){
+        mysqli_query($con, /** @lang text */ "INSERT INTO `trash`(`categoryId`) VALUES ('$delCat')");
+        header('Location: category.php');
+    }
+}
+if (isset($_GET['delCatCom'])) {
+    $catId = $_GET['delCatCom'];
+    $deleteCat = mysqli_query($con,/** @lang text */"DELETE FROM `category` WHERE `id` = '$catId'");
+    if($deleteCat){
+        mysqli_query($con, /** @lang text */ "DELETE FROM `trash` WHERE `categoryId` = '$catId'");
+        header('Location: trash.php');
+    }
+}
+if (isset($_GET['catRestore'])) {
+    $catId = $_GET['catRestore'];
+    $deleteCat = mysqli_query($con,/** @lang text */"UPDATE `category` SET `isActive`=1 WHERE id='$catId'");
+    if($deleteCat){
+        mysqli_query($con, /** @lang text */ "DELETE FROM `trash` WHERE `categoryId` = '$catId'");
+        header('Location: trash.php');
+    }
+}
+
+
+
+
+
 
 // --- Sub-Category CRUD Functions --- //
 if (isset($_POST['createSub'])) {
@@ -55,6 +76,13 @@ if (isset($_GET['delSub'])) {
     }
 }
 
+
+
+
+
+
+
+
 // --- Product CRUD Functions --- //
 if (isset($_POST['createProduct'])) {
     $categoryId = $_POST['categoryId'];
@@ -66,7 +94,7 @@ if (isset($_POST['createProduct'])) {
     $beforeDiscount = $_POST['beforeDiscount'];
     $shippingCharge = $_POST['shippingCharge'];
     $description = $_POST['description'];
-    $createProduct = mysqli_query($con,/** @lang text */"INSERT INTO `products`(`category`, `subCategory`, `productName`, `company`, `price`, `priceBeforeDiscount`, `description`, `shippingCharge`, `availability`, `updated_at`) VALUES ('$categoryId','$subcategory','$productName','$company','$price','$beforeDiscount','$description','$shippingCharge','$availability', now())");
+    $createProduct = mysqli_query($con,/** @lang text */"INSERT INTO `products`(`category`, `subCategory`, `productName`, `company`, `price`, `isActive`, `priceBeforeDiscount`, `description`, `shippingCharge`, `availability`, `updated_at`) VALUES ('$categoryId','$subcategory','$productName','$company','$price', 1,'$beforeDiscount','$description','$shippingCharge','$availability', now())");
     if(!$createProduct){
         die('QUERY FAILED' . mysqli_error(db_connect()));
     }else{
@@ -119,6 +147,23 @@ if (isset($_POST['updateProduct'])) {
 }
 if (isset($_GET['delPro'])) {
     $id = $_GET['delPro'];
+    $query=mysqli_query($con, /** @lang text */ "UPDATE `products` SET `isActive`=0 WHERE `id`='$id'");
+    if($query){
+        mysqli_query($con, /** @lang text */ "INSERT INTO `trash`(`productId`) VALUES ('$id')");
+    }
+    header('Location: product.php');
+}
+if (isset($_GET['proRestore'])) {
+    $id = $_GET['proRestore'];
+    $query=mysqli_query($con, /** @lang text */ "UPDATE `products` SET `isActive`=1 WHERE `id`='$id'");
+    if($query){
+        mysqli_query($con, /** @lang text */ "DELETE FROM `trash` WHERE `productId`='$id'");
+    }
+    header('Location: product.php');
+}
+
+if (isset($_GET['delProCom'])) {
+    $id = $_GET['delProCom'];
     $query=mysqli_query($con, /** @lang text */ "SELECT * FROM `products` WHERE `id`='$id'");
     $result=mysqli_fetch_array($query);
     if(!empty($result['imageId'])) {
@@ -132,8 +177,19 @@ if (isset($_GET['delPro'])) {
 //        mysqli_query($con, /** @lang text */ "DELETE FROM `images` WHERE `id`='$imageId'");
     }
     $delProQuery = mysqli_query($con,/** @lang text */"DELETE FROM `products` WHERE id = '$id'");
-    header('Location: product.php');
+    if ($delProQuery){
+        mysqli_query($con, /** @lang text */ "DELETE FROM `trash` WHERE `productId`='$id'");
+        header('Location: trash.php');
+    }
 }
+
+
+
+
+
+
+
+
 
 // --- Profile CRUD Functions --- //
 // Handling Login
@@ -169,5 +225,103 @@ if (isset($_POST['changePassword'])){
         $msg = "Success profile updated";
     } else {
         $e_msg = "Error ";
+    }
+}
+
+
+
+
+
+
+
+
+// --- Users Acton Functions --- //
+if (isset($_GET['action']) && $_GET['action'] == 'admin'){
+    $userId = $_GET['id'];
+    $result = mysqli_query($con, /** @lang text */ "UPDATE `users` SET `role`='admin' WHERE `id`='$userId'");
+    if ($result)$_SESSION['msg'] = "Successful user is now an admin";
+    header("Location: users.php");
+}
+if (isset($_GET['action']) && $_GET['action'] == 'removea'){
+    $userId = $_GET['id'];
+    $result = mysqli_query($con, /** @lang text */ "UPDATE `users` SET `role`=null WHERE `id`='$userId'");
+    if ($result)$_SESSION['msg'] = "Successful user has been remove as an admin";
+    header("Location: users.php");
+}
+if (isset($_GET['action']) && $_GET['action'] == 'block'){
+    $userId = $_GET['id'];
+    $result = mysqli_query($con, /** @lang text */ "UPDATE `users` SET `isActive`=null WHERE `id`='$userId'");
+    if ($result)$_SESSION['msg'] = "Successful user has been blocked";
+    header("Location: users.php");
+}
+if (isset($_GET['action']) && $_GET['action'] == 'unblock'){
+    $userId = $_GET['id'];
+    $result = mysqli_query($con, /** @lang text */ "UPDATE `users` SET `isActive`=1 WHERE `id`='$userId'");
+    if ($result)$_SESSION['msg'] = "Successful user has been Unblocked";
+    header("Location: users.php");
+}
+
+
+
+
+
+
+
+
+
+// --- Orders Acton Functions --- //
+if (isset($_GET['status']) && isset($_GET['id'])){
+    $orderId = $_GET['id'];
+    $status  = $_GET['status'];
+    if ($status > 1) {
+        $result = mysqli_query($con, /** @lang text */ "UPDATE `orders` SET `orderStatus`=1 WHERE `id`='$orderId'");
+        if ($result)$_SESSION['msg'] = "Successful Product has been set to In Process";
+    } elseif ($status > 0 && $status < 2) {
+        $result = mysqli_query($con, /** @lang text */ "UPDATE `orders` SET `orderStatus`=null WHERE `id`='$orderId'");
+        if ($result)$_SESSION['msg'] = "Successful Product has been set to Delivered";
+    }
+    header("Location: index.php");
+}
+if (isset($_GET['ordel']) && isset($_GET['ordel'])){
+    $orderId = $_GET['ordel'];
+    $result = mysqli_query($con, /** @lang text */ "UPDATE `orders` SET `isActive`=0 WHERE `id`='$orderId'");
+    if ($result) {
+//        mysqli_query($con, /** @lang text */ "INSERT INTO `trash`(`orderId`) VALUES ('$orderId')");
+        $_SESSION['msg'] = "Successful Product Deleted";
+        header("Location: index.php");
+    }
+}
+
+
+
+
+
+
+
+
+// --- Messages Acton Functions --- //
+if (isset($_GET['message']) && !empty($_GET['message'])){
+    $messageId = $_GET['message'];
+    $result = mysqli_query($con, /** @lang text */ "UPDATE `message` SET `isActive`=0 WHERE `id`='$messageId'");
+    if ($result){
+        mysqli_query($con, /** @lang text */ "INSERT INTO `trash`(`messageId`) VALUES ('$messageId')");
+        $_SESSION['c_msg'] = "Successful Message deleted";
+        header("Location: index.php");
+    }
+}
+if (isset($_GET['delMsgCom']) && !empty($_GET['delMsgCom'])){
+    $messageId = $_GET['delMsgCom'];
+    $result = mysqli_query($con, /** @lang text */ "DELETE FROM `message` WHERE `id`='$messageId'");
+    if ($result){
+        mysqli_query($con, /** @lang text */ "DELETE FROM `trash` WHERE `messageId`='$messageId'");
+        header("Location: trash.php");
+    }
+}
+if (isset($_GET['msgRestore']) && !empty($_GET['msgRestore'])){
+    $messageId = $_GET['msgRestore'];
+    $result = mysqli_query($con,/** @lang text */"UPDATE `message` SET `isActive`=1 WHERE id='$messageId'");
+    if ($result){
+        mysqli_query($con, /** @lang text */ "DELETE FROM `trash` WHERE `messageId`='$messageId'");
+        header("Location: trash.php");
     }
 }

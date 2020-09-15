@@ -23,7 +23,7 @@
                         <option value="<?= htmlentities($row['cid']);?>"><?= htmlentities($row['catName']);?></option>
                         <?php
                         $id = $_GET['updateCat'];
-                        $getCat= mysqli_query($con,/** @lang text */"SELECT * FROM category");
+                        $getCat= mysqli_query($con,/** @lang text */"SELECT * FROM category WHERE `isActive`=1");
                         while ($rw = mysqli_fetch_assoc($getCat)){
                         if($row['catName']==$rw['catName']) {
                             continue;

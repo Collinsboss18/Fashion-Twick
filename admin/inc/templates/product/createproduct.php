@@ -18,7 +18,7 @@
                         <option>Select Category</option>
                         <?php
                         $id = $_GET['updateCat'];
-                        $query = /** @lang text */"SELECT * FROM category";
+                        $query = /** @lang text */"SELECT * FROM category WHERE `isActive`=1";
                         $result= select_query($query);
                         while ($row = mysqli_fetch_assoc($result)){
                         ?>

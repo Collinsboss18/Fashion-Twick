@@ -40,7 +40,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $query = /** @lang text */"SELECT subcategory.id,category.catName,subcategory.subcategory,subcategory.created_at FROM subcategory JOIN category ON category.id=subcategory.categoryid";
+                                    <?php $query = /** @lang text */"SELECT subcategory.id,category.catName,subcategory.subcategory,subcategory.created_at FROM subcategory JOIN category ON category.id=subcategory.categoryid ORDER BY subcategory.id DESC";
                                     $result= select_query($query);
                                     $cnt = 1;
                                     while ($row = mysqli_fetch_assoc($result)){

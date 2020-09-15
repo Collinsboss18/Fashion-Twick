@@ -1,6 +1,7 @@
 <?php $page = 'dashboard' ?>
 <!-- Header Section -->
 <?php require_once ('./inc/sections/header.php') ?>
+<?php require_once ('./inc/actions/getfeeds.php') ?>
 <!-- Header Section End -->
     <!-- Main wrapper -->
     <!-- TopBar Section -->
@@ -22,20 +23,45 @@
                         <div class="card-body">
                             <div class="d-md-flex align-items-center">
                                 <div>
-                                    <h4 class="card-title">Sales Summary</h4>
-                                    <h5 class="card-subtitle">Overview of Latest Month</h5>
+                                    <h4 class="card-title">Today's Order</h4>
+                                    <h5 class="card-subtitle">Overview of today's orders</h5>
                                 </div>
                                 <div class="ml-auto d-flex no-block align-items-center">
                                     <ul class="list-inline font-12 dl m-r-15 m-b-0">
-                                        <li class="list-inline-item text-info"><i class="fa fa-circle"></i> Iphone</li>
-                                        <li class="list-inline-item text-primary"><i class="fa fa-circle"></i> Ipad</li>
+                                        <li class="list-inline-item text-info"><i class="fa fa-clock"></i> 24 Hours</li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="row">
                                 <!-- column -->
                                 <div class="col-lg-12">
-                                    <div class="campaign ct-charts"></div>
+                                    <div class="table-responsive" style="max-height: 1000px;">
+                                        <table class="table text-capitalize">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">Product</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $f1="00:00:00"; $from=date('Y-m-d')." ".$f1; $t1="23:59:59"; $to=date('Y-m-d')." ".$t1;
+                                            $query=mysqli_query($con, /** @lang text */ "SELECT users.name AS username,users.email AS useremail,users.contactno AS usercontact,users.shippingAddress AS shippingaddress,users.shippingCity AS shippingcity,users.shippingState AS shippingstate,users.shippingPincode AS shippingpincode,products.productName AS productname,products.shippingCharge AS shippingcharge,orders.quantity AS quantity,orders.orderDate AS orderdate,products.price AS price,orders.orderStatus AS status,orders.id AS id  FROM orders JOIN users ON  orders.userId=users.id JOIN products ON products.id=orders.productId WHERE orders.orderDate BETWEEN '$from' AND '$to' ORDER BY orders.id DESC");
+                                            $cnt=1;
+                                            while($row=mysqli_fetch_array($query)) { ?>
+                                                <tr>
+                                                    <th scope="row"><?= htmlentities($cnt) ?></th>
+                                                    <td><?= htmlentities($row['username']) ?></td>
+                                                    <td><?= htmlentities($row['useremail']) ?></td>
+                                                    <td><?php echo htmlentities($row['shippingaddress'].",".$row['shippingcity'].",".$row['shippingstate']."-".$row['shippingpincode']);?></td>
+                                                    <td><?= htmlentities($row['productname']) ?></td>
+                                                </tr>
+                                                <?php $cnt = $cnt+1; } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <!-- column -->
                             </div>
@@ -45,17 +71,16 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Feeds</h4>
                             <div class="feed-widget">
                                 <ul class="list-style-none feed-body m-0 p-b-20">
                                     <li class="feed-item">
-                                        <div class="feed-icon bg-info"><i class="far fa-bell"></i></div> You have 4 pending tasks. <span class="ml-auto font-12 text-muted">Just Now</span></li>
+                                        <div class="feed-icon bg-info"><i class="far fa-bell"></i></div> Notification <span class="badge badge-info ml-auto text-white"><?= $notCount ?> New</span></li>
                                     <li class="feed-item">
-                                        <div class="feed-icon bg-success"><i class="ti-server"></i></div> Server #1 overloaded.<span class="ml-auto font-12 text-muted">2 Hours ago</span></li>
+                                        <div class="feed-icon bg-warning"><i class="mdi mdi-table-large"></i></div> Category<span class="badge badge-warning ml-auto text-white"><?= $categoryCount ?> Categories</span></li>
                                     <li class="feed-item">
-                                        <div class="feed-icon bg-warning"><i class="ti-shopping-cart"></i></div> New order received.<span class="ml-auto font-12 text-muted">31 May</span></li>
+                                        <div class="feed-icon bg-success"><i class="mdi mdi-account"></i></div> Sub Category<span class="badge badge-success ml-auto text-white"><?= $subCatCount ?> Subcategories</span></li>
                                     <li class="feed-item">
-                                        <div class="feed-icon bg-danger"><i class="ti-user"></i></div> New user registered.<span class="ml-auto font-12 text-muted">30 May</span></li>
+                                        <div class="feed-icon bg-danger"><i class="ti-shopping-cart-full"></i></div> Product<span class="badge badge-danger ml-auto text-white"><?= $productCount ?> Products</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -70,118 +95,58 @@
                             <!-- title -->
                             <div class="d-md-flex align-items-center">
                                 <div>
-                                    <h4 class="card-title">Top Selling Products</h4>
-                                    <h5 class="card-subtitle">Overview of Top Selling Items</h5>
-                                </div>
-                                <div class="ml-auto">
-                                    <div class="dl">
-                                        <select class="custom-select">
-                                            <option value="0" selected>Monthly</option>
-                                            <option value="1">Daily</option>
-                                            <option value="2">Weekly</option>
-                                            <option value="3">Yearly</option>
-                                        </select>
-                                    </div>
+                                    <h4 class="card-title">Orders</h4>
+                                    <h5 class="card-subtitle">All order's based on most recent</h5>
                                 </div>
                             </div>
-                            <!-- title -->
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table v-middle">
-                                <thead>
-                                    <tr class="bg-light">
-                                        <th class="border-top-0">Products</th>
-                                        <th class="border-top-0">License</th>
-                                        <th class="border-top-0">Support Agent</th>
-                                        <th class="border-top-0">Technology</th>
-                                        <th class="border-top-0">Tickets</th>
-                                        <th class="border-top-0">Sales</th>
-                                        <th class="border-top-0">Earnings</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            <?php if (isset($_SESSION['msg'])){ ?>
+                                <div class="alert alert-success" role="alert"> <?= $_SESSION['msg'] ?> </div>
+                            <?php } ?>
+                            <script>setTimeout(function () {<?php unset($_SESSION['msg']); ?>}, 3000)</script>
+                            <div class="table-responsive">
+                                <table class="datatable-1 table text-capitalize">
+                                    <thead>
                                     <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="m-r-10"><a class="btn btn-circle btn-info text-white">EA</a></div>
-                                                <div class="">
-                                                    <h4 class="m-b-0 font-16">Elite Admin</h4>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Single Use</td>
-                                        <td>John Doe</td>
-                                        <td>
-                                            <label class="label label-danger">Angular</label>
-                                        </td>
-                                        <td>46</td>
-                                        <td>356</td>
-                                        <td>
-                                            <h5 class="m-b-0">$2850.06</h5>
-                                        </td>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Actions</th>
+                                        <th scope="col"></th>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="m-r-10"><a class="btn btn-circle btn-orange text-white">MA</a></div>
-                                                <div class="">
-                                                    <h4 class="m-b-0 font-16">Monster Admin</h4>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Single Use</td>
-                                        <td>Venessa Fern</td>
-                                        <td>
-                                            <label class="label label-info">Vue Js</label>
-                                        </td>
-                                        <td>46</td>
-                                        <td>356</td>
-                                        <td>
-                                            <h5 class="m-b-0">$2850.06</h5>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="m-r-10"><a class="btn btn-circle btn-success text-white">MP</a></div>
-                                                <div class="">
-                                                    <h4 class="m-b-0 font-16">Material Pro Admin</h4>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Single Use</td>
-                                        <td>John Doe</td>
-                                        <td>
-                                            <label class="label label-success">Bootstrap</label>
-                                        </td>
-                                        <td>46</td>
-                                        <td>356</td>
-                                        <td>
-                                            <h5 class="m-b-0">$2850.06</h5>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="m-r-10"><a class="btn btn-circle btn-purple text-white">AA</a></div>
-                                                <div class="">
-                                                    <h4 class="m-b-0 font-16">Ample Admin</h4>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Single Use</td>
-                                        <td>John Doe</td>
-                                        <td>
-                                            <label class="label label-purple">React</label>
-                                        </td>
-                                        <td>46</td>
-                                        <td>356</td>
-                                        <td>
-                                            <h5 class="m-b-0">$2850.06</h5>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $query=mysqli_query($con, /** @lang text */ "SELECT users.name AS username,users.email AS useremail,users.contactno AS usercontact,users.shippingAddress AS shippingaddress,users.shippingCity AS shippingcity,users.shippingState AS shippingstate,users.shippingPincode AS shippingpincode,products.productName AS productname,products.shippingCharge AS shippingcharge,orders.quantity AS quantity,orders.isActive AS isActive,orders.orderDate AS orderdate,products.price AS price,orders.orderStatus AS status,orders.id AS id  FROM orders JOIN users ON  orders.userId=users.id JOIN products ON products.id=orders.productId ORDER BY orders.id DESC");
+                                    $cnt=1;
+                                    while($row=mysqli_fetch_array($query)) {
+                                        if ($row['isActive'] == 1) {?>
+
+                                        <tr>
+                                            <th scope="row"><?= htmlentities($cnt) ?></th>
+                                            <td><?= htmlentities($row['username']) ?></td>
+                                            <td><?= htmlentities($row['useremail']) ?></td>
+                                            <td><?php echo htmlentities($row['shippingaddress'].",".$row['shippingcity'].",".$row['shippingstate']."-".$row['shippingpincode']);?></td>
+                                            <td><?= htmlentities($row['productname']) ?></td>
+                                            <td><?= htmlentities($row['quantity']) ?></td>
+                                            <td><?= htmlentities($row['quantity']*$row['price']+$row['shippingcharge']) ?></td>
+                                            <td><?php if ($row['status'] > 1) {
+                                                    echo "<a href='?status={$row['status']}&id={$row['id']}' class='btn btn-sm btn-primary text-white'>In Process</a>";
+                                                } elseif ($row['status'] > 0 && $row['status'] < 2) {
+                                                    echo "<a href='?status={$row['status']}&id={$row['id']}' class='btn btn-sm btn-success text-white'>Delivered</a>";
+                                                } else {
+                                                    echo "<a class='btn btn-sm btn-secondary text-white' disabled='true'>Delivered</a>";
+                                                }?>
+                                            </td>
+                                            <td><a href='?ordel=<?=$row['id']?>' class='btn btn-sm btn-danger text-white' onClick="return confirm('Are you sure you want to delete?')">Delete</a></td>
+                                        </tr>
+                                        <?php $cnt = $cnt+1; } } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -191,114 +156,33 @@
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Recent Comments</h4>
+                            <h4 class="card-title">Messages</h4>
+                            <h5 class="card-subtitle">Messages form clients contact form</h5>
+                            <?php if (isset($_SESSION['c_msg'])){ ?>
+                                <div class="alert alert-success" role="alert"> <?= $_SESSION['c_msg'] ?> </div>
+                            <?php } ?>
+                            <script>setTimeout(function () {<?php unset($_SESSION['c_msg']); ?>}, 3000)</script>
                         </div>
+
                         <div class="comment-widgets scrollable">
                             <!-- Comment Row -->
+                            <?php
+                            $query=mysqli_query($con, /** @lang text */ "SELECT * FROM `message` WHERE `isActive`=1");
+                            $cnt=1;
+                            while($row=mysqli_fetch_array($query)) { ?>
                             <div class="d-flex flex-row comment-row m-t-0">
-                                <div class="p-2"><img src="assets/img/users/1.jpg" alt="user" width="50" class="rounded-circle"></div>
                                 <div class="comment-text w-100">
-                                    <h6 class="font-medium">James Anderson</h6>
-                                    <span class="m-b-15 d-block">Lorem Ipsum is simply dummy text of the printing and type setting industry. </span>
+                                    <h6 class="font-medium"><?= $row['name'] ?></h6>
+                                    <span class="m-b-15 d-block"><?= $row['message'] ?> </span>
                                     <div class="comment-footer">
-                                        <span class="text-muted float-right">April 14, 2016</span> <span class="label label-rounded label-primary">Pending</span> <span class="action-icons">
-                                                <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
-                                                <a href="javascript:void(0)"><i class="ti-check"></i></a>
-                                                <a href="javascript:void(0)"><i class="ti-heart"></i></a>
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Comment Row -->
-                            <div class="d-flex flex-row comment-row">
-                                <div class="p-2"><img src="assets/img/users/4.jpg" alt="user" width="50" class="rounded-circle"></div>
-                                <div class="comment-text active w-100">
-                                    <h6 class="font-medium">Michael Jorden</h6>
-                                    <span class="m-b-15 d-block">Lorem Ipsum is simply dummy text of the printing and type setting industry. </span>
-                                    <div class="comment-footer ">
-                                        <span class="text-muted float-right">April 14, 2016</span>
-                                        <span class="label label-success label-rounded">Approved</span>
-                                        <span class="action-icons active">
-                                                <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
-                                                <a href="javascript:void(0)"><i class="icon-close"></i></a>
-                                                <a href="javascript:void(0)"><i class="ti-heart text-danger"></i></a>
-                                            </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Comment Row -->
-                            <div class="d-flex flex-row comment-row">
-                                <div class="p-2"><img src="assets/img/users/5.jpg" alt="user" width="50" class="rounded-circle"></div>
-                                <div class="comment-text w-100">
-                                    <h6 class="font-medium">Johnathan Doeting</h6>
-                                    <span class="m-b-15 d-block">Lorem Ipsum is simply dummy text of the printing and type setting industry. </span>
-                                    <div class="comment-footer">
-                                        <span class="text-muted float-right">April 14, 2016</span>
-                                        <span class="label label-rounded label-danger">Rejected</span>
+                                        <span class="text-muted float-right"><?= htmlentities(date("F-d-Y", strtotime($row['date']))) ?></span>
                                         <span class="action-icons">
-                                                <a href="javascript:void(0)"><i class="ti-pencil-alt"></i></a>
-                                                <a href="javascript:void(0)"><i class="ti-check"></i></a>
-                                                <a href="javascript:void(0)"><i class="ti-heart"></i></a>
-                                            </span>
+                                            <a class="text-danger" href="?message=<?= $row['id'] ?>"><i class="ti-trash"></i>DELETE</a>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- column -->
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Temp Guide</h4>
-                            <div class="d-flex align-items-center flex-row m-t-30">
-                                <div class="display-5 text-info"><i class="wi wi-day-showers"></i> <span>73<sup>°</sup></span></div>
-                                <div class="m-l-10">
-                                    <h3 class="m-b-0">Saturday</h3><small>Ahmedabad, India</small>
-                                </div>
-                            </div>
-                            <table class="table no-border mini-table m-t-20">
-                                <tbody>
-                                    <tr>
-                                        <td class="text-muted">Wind</td>
-                                        <td class="font-medium">ESE 17 mph</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Humidity</td>
-                                        <td class="font-medium">83%</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Pressure</td>
-                                        <td class="font-medium">28.56 in</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Cloud Cover</td>
-                                        <td class="font-medium">78%</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <ul class="row list-style-none text-center m-t-30">
-                                <li class="col-3">
-                                    <h4 class="text-info"><i class="wi wi-day-sunny"></i></h4>
-                                    <span class="d-block text-muted">09:30</span>
-                                    <h3 class="m-t-5">70<sup>°</sup></h3>
-                                </li>
-                                <li class="col-3">
-                                    <h4 class="text-info"><i class="wi wi-day-cloudy"></i></h4>
-                                    <span class="d-block text-muted">11:30</span>
-                                    <h3 class="m-t-5">72<sup>°</sup></h3>
-                                </li>
-                                <li class="col-3">
-                                    <h4 class="text-info"><i class="wi wi-day-hail"></i></h4>
-                                    <span class="d-block text-muted">13:30</span>
-                                    <h3 class="m-t-5">75<sup>°</sup></h3>
-                                </li>
-                                <li class="col-3">
-                                    <h4 class="text-info"><i class="wi wi-day-sprinkle"></i></h4>
-                                    <span class="d-block text-muted">15:30</span>
-                                    <h3 class="m-t-5">76<sup>°</sup></h3>
-                                </li>
-                            </ul>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

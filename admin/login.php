@@ -38,11 +38,7 @@
                     <div class="card-body">
                         <h2>Admin Login</h2>
                         <form class="form-horizontal form-material" name="adminLogin" action="" method="post">
-                            <?php if (isset($e_msg)){ ?>
-                            <div class="alert alert-danger" role="alert">
-                                <?= $e_msg ?>
-                            </div>
-                            <?php } ?>
+                            <?php if (isset($e_msg)){ ?><div class="alert alert-danger" role="alert"><?= $e_msg ?></div><?php } ?>
                             <div class="form-group">
                                 <label class="col-md-12">Email Address</label>
                                 <div class="col-md-12">

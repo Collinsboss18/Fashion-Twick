@@ -11,12 +11,12 @@
                         <div class="user-pic"><img src="assets/img/users/<?= $_SESSION['infoA']['image'] ?>" alt="users" class="rounded-circle" width="40" /></div>
                         <div class="user-content hide-menu m-l-10">
                             <a href="javascript:void(0)" class="" id="Userdd" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <h5 class="m-b-0 user-name font-medium">Steave Jobs <i class="fa fa-angle-down"></i></h5>
-                                <span class="op-5 user-email">varun@gmail.com</span>
+                                <h5 class="m-b-0 user-name font-medium"><?= $_SESSION['infoA']['name'] ?> <i class="fa fa-angle-down"></i></h5>
+                                <span class="op-5 user-email"><?= $_SESSION['infoA']['email'] ?></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Userdd">
                                 <a class="dropdown-item" href="index.php"><i class="ti-user m-r-5 m-l-5"></i> Dashboard</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
+                                <a class="dropdown-item" href="index.php"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
                                 <a class="dropdown-item" href="profile.php"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="logout.php"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
@@ -42,7 +42,7 @@
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="product.php" aria-expanded="false">
-                        <i class="mdi mdi-view-sequential"></i><span class="hide-menu">Manage Products</span>
+                        <i class="mdi mdi-shopping"></i><span class="hide-menu">Manage Products</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -56,7 +56,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.html" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="trash.php" aria-expanded="false">
                         <i class="fa fa-trash"></i><span class="hide-menu">Trash</span>
                     </a>
                 </li>
@@ -64,7 +64,6 @@
                     <a href="/" class="btn btn-block btn-danger text-white" target="_blank">Back Home</a>
                 </li>
             </ul>
-
         </nav>
         <!-- End Sidebar navigation -->
     </div>

@@ -4,6 +4,10 @@
             <h4 class="card-title">Update Category</h4>
         </div>
         <form class="form-horizontal form-material" action="" method="post" role="form">
+            <?php if (isset($_SESSION['u_msg'])){ ?>
+                <div class="alert alert-success" role="alert"> <?= $_SESSION['u_msg'] ?> </div>
+            <?php } ?>
+            <script>setTimeout(function () {<?php unset($_SESSION['u_msg']); ?>}, 1000)</script>
             <?php
             $id = $_GET['updateCat'];
             $query = /** @lang text */"SELECT * FROM category WHERE id = '$id' LIMIT 1";

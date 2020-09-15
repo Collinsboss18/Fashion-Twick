@@ -40,9 +40,7 @@
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $query = /** @lang text */
-                                        "SELECT * FROM category";
-                                    $result= select_query($query);
+                                    $result= mysqli_query($con, /** @lang text */ "SELECT * FROM category WHERE `isActive`=1");
                                     $cnt = 1;
                                     while ($row = mysqli_fetch_assoc($result)){
                                     ?>

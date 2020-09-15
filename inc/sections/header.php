@@ -1,3 +1,4 @@
+<?php require_once ('inc/database/config.php') ?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -79,11 +80,11 @@
                         <a href="#">Register</a>
                     </div>
                     <ul class="header__right__widget">
-                        <li><span class="icon_search search-switch"></span></li>
-                        <li><a href="#"><span class="icon_heart_alt"></span>
+                        <li title="Search Product"><span class="icon_search search-switch"></span></li>
+                        <li title="My Carts"><a href="shop-cart.php"><span class="icon_heart_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
-                        <li><a href="#"><span class="icon_bag_alt"></span>
+                        <li title="Wish-List"><a href="#"><span class="icon_bag_alt"></span>
                                 <div class="tip">2</div>
                             </a></li>
                     </ul>

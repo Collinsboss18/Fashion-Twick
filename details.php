@@ -1,4 +1,5 @@
-<?php $page = "category" ?>
+<?php $page = "details" ?>
+<?php if (!isset($_GET['pid']))header('Location: /'); ?>
 <!-- Header Section End -->
 <?php require_once ("./inc/sections/header.php");?>
 <!-- Header Section End -->

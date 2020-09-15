@@ -4,6 +4,10 @@
             <h4 class="card-title">Create Category</h4>
         </div>
         <form class="form-horizontal form-material" action="" method="post" role="form">
+            <?php if (isset($_SESSION['c_msg'])){ ?>
+                <div class="alert alert-success" role="alert"> <?= $_SESSION['c_msg'] ?> </div>
+            <?php } ?>
+            <script>setTimeout(function () {<?php unset($_SESSION['c_msg']); ?>}, 1000)</script>
             <div class="form-group">
                 <label class="col-md-12">Category Description</label>
                 <div class="col-md-12">
