@@ -13,7 +13,7 @@
         </div>
         <div class="col-7">
             <div class="text-right upgrade-btn">
-                <a href="/" class="btn btn-danger text-white" target="_blank">Back Home</a>
+                <a href="/admin.php" class="btn btn-cyan text-white" target="_blank">Dashboard</a>
             </div>
         </div>
     </div>
